@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+	<parameters>
+		<parameter key="templating.locator.class">HMU\Bundle\MobileBundle\Templating\Loader\TemplateLocator</parameter>
+		<parameter key="hmu_mobile.listener.class">HMU\Bundle\MobileBundle\EventListener\MobileListener</parameter>
+		<parameter key="hmu_mobile.twig_extension.class">HMU\Bundle\MobileBundle\Twig\AutoExtendExtension</parameter>
+	</parameters>
+	
+	<services>
+		<service id="hmu_mobile.twig_extension" class="%hmu_mobile.twig_extension.class%">
+			<tag name="twig.extension" alias="auto_extend" />
+		</service>
+		
+		<service id="hmu_mobile.listener" class="%hmu_mobile.listener.class%">
+			<tag name="kernel.event_listener" event="kernel.request" method="listener" />
+			<argument type="service" id="twig"/>
+		</service>
+	</services>
+</container>
